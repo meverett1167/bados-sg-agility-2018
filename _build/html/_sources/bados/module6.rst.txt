@@ -1,4 +1,0 @@
-.. _module6:
-
-Review Reporting and Analytics Features for Behavioral DoS
-====================================================================
