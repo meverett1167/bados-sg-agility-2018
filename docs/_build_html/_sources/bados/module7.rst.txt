@@ -1,3 +1,0 @@
-Review DoS Dashboard and Analytics
-===================================
-In this module, we will use some of |awaf|'s DoS analytics tools to examine the traffic details and mitigation actions from prior exercises.
