@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Request Signatures &mdash; Introduction to ASM/AWAF Behavioral DoS 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Bad Actor Detection" href="module5.html" />
+    <link rel="prev" title="4. Review Stress-Based and Behavioral DoS Profile Settings" href="module3.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Introduction to ASM/AWAF Behavioral DoS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">1. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module1.html">2. F5 Advanced Web Application Firewall Base Configuration and Traffic Baseline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module2.html">3. Review Application Security DoS Profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module3.html">4. Review Stress-Based and Behavioral DoS Profile Settings</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Request Signatures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module5.html">6. Bad Actor Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module6.html">7. Bad Actor Detection and Request Signatures</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Introduction to ASM/AWAF Behavioral DoS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>5. Request Signatures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/bados/module4.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="request-signatures">
+<span id="module4"></span><h1>5. Request Signatures<a class="headerlink" href="#request-signatures" title="Permalink to this headline">¶</a></h1>
+<p>In this module you will be initiating a L7 DDoS attack on the hackazon virtual server, from eth1, using 10.1.10.53 as the source IP address. This source IP will match XFF_mixed_Attacker_Good_iRule, and an X-Forward-For header will be inserted in the HTTP request in the 132.173.99.0/24 IP address range.</p>
+<p>Once the attack begins the BIG-IP WAF (ASM) will immediately switch into attack mode due to the server health deteriorating almost immediately. As the server gets totally overwhelmed, you may at first notice the good script dropping requests. <em>That’s why BaDoS first mitigates with a global rate limit just to protect the server</em>. In a short time, the good script will go back to all 200 OK responses. During this time Behavioral DoS identifies anamolous traffic and generates <strong>Dynamic Signatures</strong> matching only the malicious traffic. Once mitigation is in affect, the server health will rapidly improve and application performance will return to normal.</p>
+<ol class="arabic">
+<li><p class="first">Using Chromium Browser on the Xubuntu Jumpbox, open tab to the GUI on bigip01 (<a class="reference external" href="https://10.1.1.245">https://10.1.1.245</a>)</p>
+</li>
+<li><p class="first">Navigate to <strong>Security ›› DoS Protection:Signatures</strong> and click on the <strong>Dynamic</strong> box, then set the <strong>Refresh</strong> value to <strong>20 secs</strong>.</p>
+</li>
+<li><p class="first">Open another tab/window in Chromium Browser, and go to <strong>Security ››Reporting : DoS : Dashboard</strong>. The dashboard is NOT realtime in may take up to 10 minutes for traffic to display.</p>
+</li>
+<li><p class="first">Revisit the Terminal window opened which is monitoring behavioral DoS learning signals.  Verify the first number (baseline_learning_confidence) is at or above 90%.</p>
+</li>
+<li><p class="first">Revisit the Terminal window opened which is running the baseline traffic generation script.  Make note of the normal, pre-attack, response time for each request.</p>
+</li>
+<li><p class="first">From Xubuntu Jumpbox open a NEW Terminal window. From your home directory
+enter:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">f5student@xjumpbox~$</span> ./AB_DOS.sh
+
+<span class="go">- Select **2** – Attack start - score</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Using Chromium Browser on the Xubuntu Jumpbox, open another tab to the GUI on bigip01, and navigate to <strong>Security ›› Event Logs ››  DoS ›› Application Events</strong></p>
+</li>
+<li><p class="first">Almost immediately you should see an attack has started, and Advanced Web Application Firewall has assigned an Attack ID to the event.  You will see something similar to the screenshot below:</p>
+</li>
+</ol>
+<blockquote>
+<div><a class="reference internal" href="../_images/event-log-bados-start.png"><img alt="event-log-bados-start" src="../_images/event-log-bados-start.png" style="width: 6.59740in; height: 1.33203in;" /></a></div></blockquote>
+<ol class="arabic simple" start="9">
+<li>Review <strong>Dyanmic Signatures</strong> UI page opened in step #2. It might take a few moments for a dynamic signature(s) to generate, but shortly after the attack has been detected a signature should be created.  Once a signature(s) is generated, if you click on the signature (NOT on the blue link, but somewhere on the signature bar), you will get the details about the signature in Wireshark format.  Also, you can examine the current status of the signature (mitigating or not), and statistics on recent attacks which used the signature.</li>
+</ol>
+<blockquote>
+<div><p><a class="reference internal" href="../_images/dos-attack-sig-detail.png"><img alt="dos-attack-sig-detail" src="../_images/dos-attack-sig-detail.png" style="width: 8.59740in; height: 4.33203in;" /></a></p>
+<ol class="arabic simple">
+<li><strong>Signature ID</strong>: Signature ID generated for this signature.  You can use the signature ID in DoS Analysis/Dashboard views (explored in module 6) to get more details on actions taken by this signature.</li>
+<li><strong>Deployment State</strong>: current state of the signature.  Options include:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Mitigate</strong> - Collect stats, learn, alert, and mitigate.  All thresholds and threshold actions are applied, and rate limiting occurs if the device is under high stress.</li>
+<li><strong>Detect Only</strong> - Collects stats,learn, and alert.  Develops dynamic signatures without enforcing any thresholds or limits.</li>
+<li><strong>Learn Only</strong> - Collect stats and learn.  Develops dynamic signatures without enforcing any thresholds or limits</li>
+<li><strong>Disabled</strong> - No stat collection or mitigation, totally disables the signature.</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><strong>Attack Status</strong> - the state of the signature with respect to ongoing attacks.  Specifically, is this particular signature being used to mitigate an on-going attack.</li>
+<li><strong>Attack ID</strong> - the attack ID for the attack that generated this signature.  Clicking the attack ID will take you to the DoS Analysis views filtered on this attack ID.</li>
+<li><strong>Predicates List</strong> - the conditions for the request to be associated with this signature.  Includes one or more match ,expresssions, joined by logical operators, which the system uses to match traffic causing a DoS attack.</li>
+<li><strong>Attack History</strong> - provides an account of all attacks in which this signature has been used to mitigate.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dynamic Attack signatures generated will remain in the list up to the max number of signatures supported, and will be will re-used whenever an attack is detected, and traffic matches the conditions defined in the signature</p>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li>With the attack script still running, examine the output of the baseline script.  You should be getting HTTP 200 OK responses, and response time should be inline with pre-attack response times.  Also, verify you can use browse to <a class="reference external" href="http://hackazon.f5demo.com">http://hackazon.f5demo.com</a> without issue.</li>
+<li>In the window where you are running the attack script, enter <strong>CTRL-C</strong>, they type <strong>4</strong> to kill the attack script cleanly.</li>
+<li>Delete all attack signatures created during this module.</li>
+<li>Leave baseline_menu.sh script running.</li>
+</ol>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="module5.html" class="btn btn-neutral float-right" title="6. Bad Actor Detection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="module3.html" class="btn btn-neutral" title="4. Review Stress-Based and Behavioral DoS Profile Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Michael Everett.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

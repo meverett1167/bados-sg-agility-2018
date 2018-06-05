@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>7. Bad Actor Detection and Request Signatures &mdash; Introduction to ASM/AWAF Behavioral DoS 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="6. Bad Actor Detection" href="module5.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Introduction to ASM/AWAF Behavioral DoS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">1. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module1.html">2. Base Configuration and Traffic Baseline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module2.html">3. Application Security DoS Profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module3.html">4. Stress-Based and Behavioral DoS Profile Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module4.html">5. Request Signatures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module5.html">6. Bad Actor Detection</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. Bad Actor Detection and Request Signatures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bonus">7.1. Bonus</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Introduction to ASM/AWAF Behavioral DoS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>7. Bad Actor Detection and Request Signatures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/bados/module6.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bad-actor-detection-and-request-signatures">
+<span id="module6"></span><h1>7. Bad Actor Detection and Request Signatures<a class="headerlink" href="#bad-actor-detection-and-request-signatures" title="Permalink to this headline">¶</a></h1>
+<p>In the previous modules, we examined both request signature detection and bad actor detection mitigations individually.  In this module, we will enable both mitigations together, and explore how they operate in tandem to mitigate a DoS attack.  Additionally, we will use Advanced Web Application Firewall’s DoS Reporting tools to further inspect the details of each attack.</p>
+<ol class="arabic simple">
+<li>Using Chromium Browser on the Xubuntu Jumpbox, open another tab to the GUI on bigipo01</li>
+<li>Navigate to <strong>Security ›› DoS Protection : DoS Profiles</strong> and click the hackazon_bados profile we created earlier.</li>
+<li>Click the <strong>Application Security</strong> tab, and then click <strong>Behavioral &amp; Stress-based Detection</strong> button in the Application Security panel.</li>
+<li>Click the <strong>Edit</strong> link to the right of the <strong>Behavioral Detection and Mitigation</strong> section, then uncheck the checkbox next to <strong>Bad actors behavior detection</strong>, and check the box next to <strong>Request signatures detection</strong></li>
+<li>Scroll down, and click <strong>Update</strong> button.</li>
+<li>Navigate to <strong>Security ›› Reporting ›› DoS ›› Dashboard</strong></li>
+<li>From the <strong>DoS Dashboard</strong> select the refresh drop down and set value to 1 min, and grab the slider bar at the top and drag it as far right as possible.</li>
+<li>On the right side of the <strong>DoS Dashboard</strong>, grab the handle just to the right right of the HTTP and Network filter labels, and pull left to the midway point of the screen.</li>
+<li>Using the inner-most vertical scroller on the right-hand side of the screen, scroll down until you see the <strong>Transaction Outcomes</strong> dynamic panel.  Click the panel to expand, then click the three vertical lines to the left of the Transaction Outcomes label.  Click on <strong>Columns</strong>,  and click the green icon to remove all row labels except the following:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Transactions</li>
+<li>Attacks</li>
+<li>Valid Transactions</li>
+<li>Mitigated Transactions</li>
+<li>Blocked Transactions</li>
+<li>Imcomplete Transactions</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li>Repeat the same process to filter the <strong>Behavioral Signatures</strong> dynamic panel.</li>
+<li>With the baseline traffic still running, examine both the <strong>Transaction Outcomes</strong> and <strong>Behavior Signatures</strong> panels.  You should see all transactions have an outcome of <strong>Passthrough</strong>.  Also, the center column of the main dashboard view should show no current attacks in progress. Keep this window open.</li>
+<li>From the Xubuntu Jumpbox open another Terminal window, or return to a previously opened window.  Then:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">f5student@xjumpbox$</span>~ ssh root@10.1.1.245
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="13">
+<li>From the SSH session, run the following command:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[root@bigipo01:Active:Standalone] config #</span> watch ipidr -l /Common/vs_hackazon_http+/Common/hackazon_bados
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="14">
+<li>From the Xubuntu Jumpbox open another Terminal window, or return to a previously opened window.  Then, re-run the attack script using the following command:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">f5student@xjumpbox~$</span> ./AB_DOS.sh
+
+<span class="go">- Select **2** – Attack start - score</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="15">
+<li>Open another tab to the GUI on bigip01, and navigate to <strong>Security ›› Event Logs ››  DoS ›› Application Events</strong></li>
+<li>Almost immediately you should see an attack has started, and Advanced Web Application Firewall has assigned an Attack ID to the event.  You will see something similar to the screenshot below:</li>
+</ol>
+<blockquote>
+<div><a class="reference internal" href="../_images/event-log-bados-start.png"><img alt="event-log-bados-start" src="../_images/event-log-bados-start.png" style="width: 7.59740in; height: 1.03203in;" /></a></div></blockquote>
+<ol class="arabic simple" start="17">
+<li>Open another tab to the GUI on bigip01, and navigate to <strong>Security ›› DoS Protection : Signatures</strong>, and click on the <strong>Dynamic</strong> box, then set the <strong>Refresh</strong> value to <strong>20 secs</strong>.  In a few moments, you should see request signatures being generated.</li>
+<li>Return to the browser tab opened to the DoS Reporting Dashboard.  Monitor the <strong>Transaction Outcomes</strong> and <strong>Behavioral Signatures</strong> dynamic panels.  After a few minutes, you will begin to see signature based mitigations, and your dashboard should like similar to the image below:</li>
+</ol>
+<blockquote>
+<div><p><a class="reference internal" href="../_images/dos-dash-reqsig.png"><img alt="dos-dash-reqsig" src="../_images/dos-dash-reqsig.png" style="width: 7.59740in; height: 4.03203in;" /></a></p>
+<ol class="arabic simple">
+<li>DoS Dashboard view shows an attack has been triggered.  Select the attack, click the filter icon in upper right hand corner of Attacks table, and you can adjust the columns to view.</li>
+<li>This attack was initially mitigated with HTTP global rate limiting before a signature can be generated, accounted for in the <strong>DoS Blocked</strong> row.  Then, as an attack signature is generated, all attack traffic should begins to be blocked with the request signature(s), evident by looking at the <strong>Blocked Bad Request</strong> row in transaction outcomes.  At this point, if you refresh the dashboard, DoS Blocked counts should remain static, and Blocked Bad Request counters should be incrementing.</li>
+<li>Behavioral DoS will generate and adjust signatures as the traffic changes.  This panel shows the signatures, referenced by signature name, that have been used to mitigate this attack.</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="19">
+<li>Look back at the browser tab showing the Dynamic Request Signatures.  You should now see that not only have signatures been generated, but they are active in mitigating a current attack.  See below:</li>
+</ol>
+<blockquote>
+<div><p><a class="reference internal" href="../_images/dyn-sigs-active.png"><img alt="dyn-sigs-active" src="../_images/dyn-sigs-active.png" style="width: 7.59740in; height: 3.03203in;" /></a></p>
+<ol class="arabic simple">
+<li>The Attack Status icon has changed to red, and shows “mitigated-with-attackid”.</li>
+<li>Most recent attacks should show an incrementing <strong>Current EPS</strong> (Events Per Second) counter.</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="20">
+<li>Using a different browser tab, navigate to <strong>Security ›› DoS Protection : DoS Profiles</strong> and click the hackazon_bados profile.  As you did earlier, edit the <strong>Behavioral Detection and Mitigation</strong> section.  This time, check the checkbox next to <strong>Bad actors behavior detection</strong>, then click <strong>Update</strong>.</li>
+<li>Return to the browser tab monitoring the DoS event logs.  Soon, you will see Advanced Web Application Firewall ends the current attack, and immediately triggers a new attack.  Your DoS Application Events log should look similar to the below image:</li>
+</ol>
+<blockquote>
+<div><a class="reference internal" href="../_images/event-log-bados-change.png"><img alt="event-log-bados-change" src="../_images/event-log-bados-change.png" style="width: 6.59740in; height: 3.03203in;" /></a></div></blockquote>
+<ol class="arabic simple" start="22">
+<li>Return to the browser tab opened to the DoS Reporting Dashboard.  Monitor the <strong>Transaction Outcomes</strong> and <strong>Behavioral Signatures</strong> dynamic panels.  After a few minutes, you will begin to see transactions being mitigated with <strong>Blocked Bad Actor</strong>.  Shortly after you begin seeing transactions being mitigated via bad actor detection the Blocked Bad Request row should stop incrementing blocked transactions.  Also, you should now see another attack has been triggered in the Attacks table.  Your DoS dashboard should look similar to below image:</li>
+</ol>
+<blockquote>
+<div><p><a class="reference internal" href="../_images/dos-dash-bad-actors.png"><img alt="dos-dash-bad-actors" src="../_images/dos-dash-bad-actors.png" style="width: 6.59740in; height: 3.03203in;" /></a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Request Signatures <strong>blocked</strong> L7 requests that match the signature using a layer seven drop.  Bad Actors are <strong>mitigated</strong> at layer three and four.</p>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="23">
+<li>Return to the Terminal window from step #13 above.  You should see the IP greylist again adding attacking IP addresses.</li>
+<li>Return to the browser tab monitoring the Dyamic Request Signatures, and examine the attack status for the attack signatures and EPS counter.  You should see the attack status as <strong>Detected</strong>, not mitigating, and EPS should be 0.  This attack is now being mitigated excusively by bad actors as in the previous module.</li>
+</ol>
+<div class="section" id="bonus">
+<h2>7.1. Bonus<a class="headerlink" href="#bonus" title="Permalink to this headline">¶</a></h2>
+<p>The exercise above shows Request Signatures and Bad Actor Detection working in tandem to mitigate an attack.  However, we have a relatively small set of attackers, so almost immediately Advanced Web Application Firewall will identify all the bad actors, and the attack will be 100% mitigated with bad actor detection.  In the real world, it is highly likely the set of attackers will be very large and dynamic.  So, it is quite possible, that as soon as bad actors are detected, the attacking sources will change.  At that point, you will see an attack being mitigated by both request signatures and bad actors.  Try the below steps to simulate this activity.</p>
+<ol class="arabic simple">
+<li>Return to the iRule configured in module 1 (<span class="xref std std-ref">_XFF_iRule</span>)</li>
+<li>Modify line #10 to match below and click <strong>Update</strong></li>
+</ol>
+<blockquote>
+<div><div class="highlight-tcl notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nv">when</span> HTTP_REQUEST <span class="k">{</span>
+   <span class="c"># Good traffic</span>
+      <span class="k">if</span> <span class="k">{</span> <span class="k">[</span><span class="nv">IP</span><span class="o">::</span>addr <span class="k">[</span><span class="nv">IP</span><span class="o">::</span>client_addr<span class="k">]</span> equals <span class="mf">10.1</span>.10.52<span class="k">]</span> <span class="k">}</span> <span class="k">{</span>
+         <span class="k">set</span> xff <span class="mf">153.172</span>.223.<span class="k">[expr</span> int<span class="k">(</span><span class="nv">rand</span><span class="k">()</span><span class="o">*</span><span class="mi">100</span><span class="k">)]</span>
+         <span class="nv">HTTP</span><span class="o">::</span>header insert X-Forwarded-For <span class="nv">$xff</span>
+      <span class="k">}</span>
+
+   <span class="c"># Attack traffic</span>
+      <span class="k">if</span> <span class="k">{</span> <span class="k">[</span><span class="nv">IP</span><span class="o">::</span>addr <span class="k">[</span><span class="nv">IP</span><span class="o">::</span>client_addr<span class="k">]</span> equals <span class="mf">10.1</span>.10.53<span class="k">]</span> <span class="k">}</span> <span class="k">{</span>
+<span class="hll">         <span class="k">set</span> xff <span class="mf">112.173</span>.99.<span class="k">[expr</span> int<span class="k">(</span><span class="nv">rand</span><span class="k">()</span><span class="o">*</span><span class="mi">1000</span><span class="k">)]</span>
+</span>         <span class="nv">HTTP</span><span class="o">::</span>header insert X-Forwarded-For <span class="nv">$xff</span>
+   <span class="k">}</span>
+ <span class="k">}</span>
+</pre></div>
+</td></tr></table></div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Return to the browser tab monitoring the DoS Dashboard.  Shortly, after the iRule change you should now see the <strong>Blocked Bad Request</strong> counter incrementing again. In time, Advanced Web Application Firewall will begin to learn all the new IP’s as well, but you should have have enough time to see both mitigations active concurrently.</li>
+<li>Return to the browser tab monitoring the Dynamic Request Signatures.  You should now see the attack signatures are again active and mitigating the attack until all new sources have been learned by bad actor detection.</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="module5.html" class="btn btn-neutral" title="6. Bad Actor Detection" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Michael Everett.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

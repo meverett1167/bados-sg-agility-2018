@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Application Security DoS Profiles &mdash; Introduction to ASM/AWAF Behavioral DoS 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Stress-Based and Behavioral DoS Profile Settings" href="module3.html" />
+    <link rel="prev" title="2. F5 Advanced Web Application Firewall Base Configuration and Traffic Baseline" href="module1.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Introduction to ASM/AWAF Behavioral DoS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">1. Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module1.html">2. F5 Advanced Web Application Firewall Base Configuration and Traffic Baseline</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Application Security DoS Profiles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#review-dos-profile-general-settings">3.1. Review DoS Profile General Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module3.html">4. Stress-Based and Behavioral DoS Profile Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module4.html">5. Request Signatures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module5.html">6. Bad Actor Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module6.html">7. Bad Actor Detection and Request Signatures</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Introduction to ASM/AWAF Behavioral DoS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>3. Application Security DoS Profiles</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/bados/module2.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="application-security-dos-profiles">
+<span id="module2"></span><h1>3. Application Security DoS Profiles<a class="headerlink" href="#application-security-dos-profiles" title="Permalink to this headline">¶</a></h1>
+<p>In this module, we will review the various settings and options that make up a layer 7 DoS profile.  We will not review each and every setting, leaving that exercise up to the reader, but instead will focus on key settings which will most likely require attention during a production deployment.  More detail on each individual setting can be found by viewing the <strong>Help</strong> on left side of the BIG-IP Configuration Utility (GUI).</p>
+<div class="section" id="review-dos-profile-general-settings">
+<h2>3.1. Review DoS Profile General Settings<a class="headerlink" href="#review-dos-profile-general-settings" title="Permalink to this headline">¶</a></h2>
+<p>Settings in this screen are profile wide, and can affect all aspects of the dos configuration.</p>
+<p><a class="reference internal" href="../_images/gen-settings.png"><img alt="gen-settings" src="../_images/gen-settings.png" style="width: 6.59740in; height: 5.73203in;" /></a></p>
+<ol class="arabic simple">
+<li><strong>Application Security</strong></li>
+</ol>
+<blockquote>
+<div>This setting enables or disables the DoS profile.</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><strong>Heavy URL Protection</strong></li>
+</ol>
+<blockquote>
+<div><p>Heavy URL’s are application resources which may consume more backend resources with each client request.  Additionally, URLs which are not generally considered heavy may become heavy under significant load or attack.  As a result,  low rate requests targetting these URLs can cause significant DoS attacks, and be difficult to differentiate from legitimate requirements based on rate alone.  Advanced Web Application Firewall automatically detects heavy URLs by measuring the latency tail ratio, which is the number of transactions whose latency is consistently greater than the latency threshold defined in this configuration option.  A URL is considered heavy if its latency is more than two times the site global average over a 24 hour (default) period.</p>
+<p><a class="reference internal" href="../_images/heavy-url-det.png"><img alt="heavy-url-det" src="../_images/heavy-url-det.png" style="width: 6.59740in; height: 3.73203in;" /></a></p>
+<ol class="arabic">
+<li><p class="first">Checkbox, enables or disables, automatic detection of the heavy URLs profile-wide.  The text box allows for configuration of the baseline threshold that URLs must exceed before being considered for heavy URL determination.</p>
+</li>
+<li><p class="first">This section of the DoS Profile Heavy URL configuration allows an administrator to explictly configure a URL(s) has heavy, whether it is detected as heavy by Advanced Web Application Firewall or not.  Use this section to define application resources which are known to be heavier in terms of resource consumption, or known to be less resilient to higher volumes of traffic than the rest of the application.</p>
+</li>
+<li><p class="first">This section of the Dos Profile Heavy URL configuration allows an administrator to explictly configure URL(s) and wildcard URL patterns to be excluded from automatic heavy URL detection.  Use this section, to identify URL’s which you know may perform slower than average under normal conditions, or URLs you do not wish to have Advanced Web Application Firewall offering heavy URL protection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To provide mitigation for heavy URLs, you must enable at least one of the URL-based prevention policy methods in the TPS or Stress-based Anomaly sections of the DoS profile.</p>
+</div>
+</li>
+</ol>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first"><strong>Geolocations</strong>
+Geolocations provides options to override the dos profile geolocation detection criteria by explicity whitelisting or blacklisting specific geolocations.</p>
+<p><a class="reference internal" href="../_images/geolocs.png"><img alt="geolocs" src="../_images/geolocs.png" style="width: 6.2740in; height: 1.53203in;" /></a></p>
+</li>
+<li><p class="first"><strong>Single Page Application</strong>
+Single Page Applications (SPA) represent a change in application architecture that moves much of the content rendering and routing to client-side code.  Application requests which require server-side processing are sent as AJAX requests towards server, and the response is typically JSON/XML; this is different from traditional web applications that send HTTP requests, and generally levergage HTML as the predominant response content type. As a result, Advanced Web Application Firewall needs to modify the way it challenges clients for features like Proactive Bot Defense and capturing Device ID in the TPS/Stress based anomaly detections.  Enabling this option modifies Advanced Web Application Firewall’s challenge and challenge validation mechanisms.  When deploying L7 DoS protections it is important to understand the application architecture, and if protecting a SPA enabling this option is critical for proper operation.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="module3.html" class="btn btn-neutral float-right" title="4. Stress-Based and Behavioral DoS Profile Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="module1.html" class="btn btn-neutral" title="2. F5 Advanced Web Application Firewall Base Configuration and Traffic Baseline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Michael Everett.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

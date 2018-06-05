@@ -1,0 +1,627 @@
+Agility 2018 Self-Guided Lab: Introduction to ASM/AWAF Behavioral DoS
+
+Participant Hands-on Lab Guide
+
+|image0|
+
+Last Updated: *5/4/2018*
+
+©2015 F5 Networks, Inc. All rights reserved. F5, F5 Networks, and the F5
+logo are trademarks of F5 Networks, Inc. in the U.S. and in certain
+other countries. Other F5 trademarks are identified at f5.com.
+
+Any other products, services, or company names referenced herein may be
+trademarks of their respective owners with no endorsement or
+affiliation, express or implied, claimed by F5.
+
+\ **Table of Contents**
+
+`Lab Network Overview 2 <#_Toc513196258>`__
+
+`Accessing the lab environment 4 <#accessing-the-lab-environment>`__
+
+`Exercise 1 – DDos Mitigation Using Behavior Analysis
+6 <#_Toc513196260>`__
+
+`Mitigating L7 DDoS Attacks Using Behavioral Analysis
+6 <#mitigating-l7-ddos-attacks-using-behavioral-analysis>`__
+
+`Set up the DoS profile 6 <#set-up-the-dos-profile>`__
+
+`Create a DoS Logging profile 8 <#create-a-dos-logging-profile>`__
+
+`Add the DoS profile to a virtual server
+9 <#add-the-dos-profile-to-a-virtual-server>`__
+
+`Initiate the Good Traffic script
+11 <#initiate-the-good-traffic-script>`__
+
+`Initiated a L7 DDoS attack 12 <#initiated-a-l7-ddos-attack>`__
+
+`Exercise 2 - Mitigating BoT Attacks
+14 <#exercise-2---mitigating-bot-attacks>`__
+
+`Mitigating Bots using a DOS profile
+14 <#mitigating-bots-using-a-dos-profile>`__
+
+`Initiate a bot attack 14 <#initiate-a-bot-attack>`__
+
+`Creating/Modifying a DoS Profile
+15 <#creatingmodifying-a-dos-profile>`__
+
+Lab Network Overview
+====================
+
+Each student will have a BIG-IP VE environment with IP addressing as
+below:
+
+|image1|
+
+Accessing the lab environment
+=============================
+
+a. Open a browser and go to `http://training.f5agililty.com/<lab
+       number>/X <http://training.f5agililty.com/%3clab%20number%3e/X>`__
+       (where **X** is your student number)
+
+b. Look for the **xubuntu-jumpbox-vxx**. You will use the xubuntu
+       jumpbox for all the labs. (see below)
+
+    |image2|
+
+a. You can click on **RDP** to RDP to the Xubuntu jumpbox or you can
+   select the **CONSOLE** link and access the jumpbox via your browser.
+   **The CONSOLE link requires you turn off pop-up blockers.**
+
+    |image3|
+
+1. Open the Chrome browser and log into the BIG-IP GUI to verify the
+   BIG-IP is up.
+
+   a. Go to **https://10.1.1.245**
+
+      i.  User: **admin**
+
+      ii. Password: **admin**
+
+2. Now you will perform an initial configuration via command line.
+
+   a. Open a terminal window from the taskbar at the bottom.
+
+      i.   Log in to the BIG-IP using the command: **ssh
+           root@10.1.1.245**
+
+      ii.  The password is **default.**
+
+      iii. At the BIG-IP prompt, enter **tmsh**
+
+           1. This will place you in the BIG-IP command line mode.
+
+   b. In your browser, open then the **Lab Guides** link on the
+      bookmarks bar in a new tab/window.
+
+   c. Open the **AdvWAF Base Setup.txt** file and review the commands.
+
+   d. Copy all the commands between **# BEGIN COPY - Lab prep** and **#
+      END COPY - Lab prep**
+
+   e. Paste the commands into the terminal window at the **tmsh**
+      prompt.
+
+   f. **The BIG-IP will take several minutes to come back online.**
+
+      i. Good time for a bathroom break. Smoke ‘em if you got ‘em.
+
+3. Verify the virtual server and web site are up and running.
+
+   a. Go to **Local Traffic >> Network Map**. There should be two
+      virtual servers and all should be available (green).
+
+   b. Open up the Firefox browser. Go to http://hackazon.f5demo.com and
+      https://hackazon.f5demo.com
+
+   c. 
+
+Exercise 1 – DDos Mitigation Using Behavior Analysis
+====================================================
+
+Mitigating L7 DDoS Attacks Using Behavioral Analysis
+----------------------------------------------------
+
+Objectives:
+
+-  Set up BaDos Profile
+
+-  Run good traffic script for BaDoS Learning
+
+-  Run DoS Attack
+
+-  Observe BIG-IP create Dynamic Signatures and migitate DoS attack
+
+-  Estimated time for completion: **xx minutes**
+
+Set up the DoS profile
+~~~~~~~~~~~~~~~~~~~~~~
+
+In the section you will create a DoS profile with behavioral analysis
+configure and attach the DoS profile to the virtual server. You will
+also modify the virtual server by adding an iRule to put random IPs into
+the x-forward for (XFF) hear, modify an http profile to insert the XFF
+header and modify the to the results look more interesting.
+
+1. You will need to create a new DoS profile before you can configure
+   DoS mitigation. Go to **Security ›› DoS Protection : DoS Profiles**
+   and select **Create**. Name your profile **hackazon\_bados** and
+   select **Finished**. Open your **hackazon\_bados** DoS profile.
+
+2. There are no changes need to the properties. Select **Application
+   Security** from the top bar.
+
+    |image4|
+
+1. This rest of the DoS profile configuration will take place in this
+   screen. Begin with **General Settings**, select **Edit** to the right
+   of **Application Security** in the left-hand box and check the
+   **Enable** box.
+
+    This will active the other sections.
+
+    |image5|
+
+\*\*NOTE\*\* At any point you can save your changes by hitting the
+**Update** button in the lower left-hand corner
+
+1. Select the **Bot Signatures** section, select the **Edit** link to
+   the right of **Bot Signature Check**, check the **Enabled** box. The
+   message in red below the **Enabled** box indicates a DNS Resolver has
+   not been set up. The DNS resolver is use for reverse lookups which
+   are part of some mitigate techniques but are not necessary for this
+   lab. Select edit next to **Bot Signature Categories** and change both
+   the **Malicious Categories** and **Benign Categories** to **Report**,
+   since you will be using bots to generate traffic.
+
+    |image6|
+
+1. Select **TPS-base DoS Detection** and set the **Operation Mode** to
+   **Off**.
+
+    |image7|
+
+1. Select **Behavioral & Stress-based Detection** and edit to
+   **Operation Mode** to **Blocking**.
+
+   a. Set the **Thresholds Mode** to **Automatic**.
+
+   b. Under **Stress-based Detection and Mitigation** edit **By Source
+      IP** and uncheck **Request Blocking.** Under **By URL** uncheck
+      **Heavy URL Protection** and **Request Blocking**.
+
+   c. Under Behavioral Detection and Mitigation check the **Bad actors
+      behavior detection** and **Request signatures detection** and set
+      the **Mitigation** to **Standard**.
+
+   d. Hit **Update** in the lower left-hand corner. **Close** all the
+      sections **Behavioral & Stress-based Detection** should match the
+      figure below.
+
+    |image8|
+
+Create a DoS Logging profile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Like with Advance WAF aka ASM you will create a logging profile to
+capture DoS events.
+
+1. Go to **Security ›› Event Logs : Logging Profiles** and select
+   **Create**. Name your profile **l7\_dos\_bot\_logger**. Check the
+   **DoS Protection** and **Bot Defense** enable boxes.
+
+   a. In the **DoS Protection** tab enable the **Local Publisher**.
+
+   b. In the **Bot Defense** tab check ALL the boxes.
+
+   c. Hit **Finished**.
+
+    |image9|
+
+Add the DoS profile to a virtual server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    The DOS profile has only BaDOS enabled + Bot Signatures (only
+    reporting for all categories).
+
+Keep in mind, in real world environment the best practice is to block
+malicious categories.
+
+1. Go to **Local Traffic > Virtual Servers > Virtual Server List** and
+   select **vs\_hackazon\_http**. Under the **Security** tab on the top
+   bar select **Policies**.
+
+2. Enable the **DoS Protection Profile** and select the
+   **hackazon\_bados** profile.
+
+3. Add **l7\_dos\_bot\_logger** to the **Log Profile** and **Update**
+
+4. For purposes of this lab, **Disable** the **Application Security
+   Policy** and remove **asm\_allrequests** from the **Log Profile.**
+
+    |image10|
+
+    Because we don´t have dozens of good and bad source IPs available
+    for clients and attackers in this environment, we simulate them by
+    adding an iRule to the VS, which adds a randomized X-Forwarded-For
+    (XFF) header to each request and a http profile which enables to
+    insert XFF into the HTTP headers.
+
+    **XFF\_mixed\_Attacker\_Good\_iRule**
+
+1. Go to **Local Traffic ›› iRules : iRule List** and select **Create.**
+   Name the new iRule **XFF\_mixed\_Attacker\_Good\_iRule.** Copy and
+   paste the iRule below.
+
+    when HTTP\_REQUEST {
+
+    # Good traffic
+
+    if { [IP::addr [IP::client\_addr] equals 10.1.10.52] } {
+
+    set xff 153.172.223.[expr int(rand()\*100)]
+
+    HTTP::header insert X-Forwarded-For $xff
+
+    }
+
+    # Attack traffic
+
+    if { [IP::addr [IP::client\_addr] equals 10.1.10.53] } {
+
+    set xff 132.173.99.[expr int(rand()\*25)]
+
+    HTTP::header insert X-Forwarded-For $xff
+
+    }
+
+    }
+
+    AdvWAF/ASM can honor the X-Forwarded-For header by enabling this in
+    the http-profile.
+
+1. |image11|\ Go to **Local Traffic ›› Profiles : Services : HTTP** and
+   select **Create**. Name the new http profile **xff\_http** and enable
+   **Accept XFF**.
+
+    Go to the **vs\_hackazon\_http** virtual server. In the
+    **Properties** tab, under **Configuration** section, select
+    **xff\_http** for the **HTTP Profile**. In the **Resource** tab, in
+    the **iRules** section select the **Managed** button and move
+    **XFF\_mixed\_Attacker\_Good\_iRule** from the **Available** to the
+    **Enabled** box
+
+Initiate the Good Traffic script
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    The jumpbox is used to generate legitimate traffic and bad traffic,
+    eth1 has 10.1.10.51-55 configured and 10.1.10.52 will be the
+    source-IP used for the good traffic script. The source IP will match
+    XFF\_mixed\_Attacker\_Good\_iRule and a X-Forward For header will be
+    placed in the HTTP request in the 153.172.223.0/24 IP address range.
+
+    In your home directory (/home/f5student), you will find the two
+    scripts used for this lab:
+
+    **baseline\_menu.sh** - is used to create baseline traffic
+
+    **AB\_DOS.sh** - is used to do a L7 DOS attack
+
+    The baseline traffic script gives two options: increasing traffic
+    and alternate traffic.
+
+1. Start baseline traffic, make sure you are in your home directory, the
+   type:
+
+    ./baseline\_menu.sh
+
+a. Select option 2 **alternate** and keep it running in the window
+
+    This is your valid traffic and the number of requests does change
+    based on time. The request itself changes as well. The User-Agent
+    changes with each request and the requested URI also. Both are
+    randomly taken from files in the “source” directory in the home
+    directory.
+
+    BaDoS can now learn how “good” traffic looks.
+
+1. Now ssh into the BIG-IP. You can use PuTTY or a terminal window to do
+   this.
+
+   a. From a terminal window:
+
+    ssh root@10.1.1.245
+
+a. Or select the PuTTY icon at the bottom |image12| and then **bigip01**
+   from the Saved Sessions.
+
+1. The admd daemon will generate output that shows various important
+   signals. The syntax for the “admd” command is:
+
+    admd -s
+    vs./Common/vs\_hackazon\_http+/Common/hackazon\_bados.info.learning
+
+NOTE: You may need to hit return <cr> twice to get the output started.
+
+a. /Common/vs\_hackazon\_http – is the name of the virtual server
+
+b. /Common/hackazon\_bados – is the name of the DoS profile.
+
+    Here is a sample output:
+
+    |image13|
+
+    The first number is the approximation of learned baseline or, in
+    other words, how confident the BIG-IP is that it has a solid
+    baseline of normal traffic.
+
+Note: It may take 5 or more minutes before you begin to get learned
+baseline numbers.
+
+    For purpose of this lab, once your learned baseline gets around 90%
+    you can continue. The longer it runs, the better it is, because the
+    system is self-adjusting permanently. So, in a normal environment it
+    is constantly updating.
+
+    While you wait. The output of the **info.learning** signal, which 4
+    comma-separated values that show the status of the admd behavioral
+    dos learning:
+
+    **info.learning** show estimates for behavioral DoS baseline
+    readiness
+
+    The signal values are:
+
+    [baseline\_learning\_confidence, learned\_bins\_count ,
+    good\_table\_size , good\_table\_confidence]
+
+-  **Baseline\_learning\_confidence** in % - how confident the system is
+       in the baseline learning.
+
+-  **Learned\_bins\_count** - number of learned bins
+
+-  **Good\_table\_size** - number of learned requests
+
+-  **Good\_table\_confidence** - how confident, as a percentage, the
+       system is in the good table. It must be 100% for behavioral
+       signatures.
+
+    For the lab/demo to be successful, you should wait until:
+
+    • baseline\_learning\_confidence > 80% (90%+ is better)
+
+    • learned\_bins\_count > 0
+
+    • good\_table\_size > 2000
+
+    • good\_table\_confidence = 100
+
+    If you would like to see all of the values available, simply enter
+    ‘admd -s vs./Common/vs\_hackazon\_http’ where you can see a wide
+    range of interesting statistics. To see L7 DOS logs check this file:
+
+    # tail -f /var/log/dosl7/dosl7d.log
+
+Initiated a L7 DDoS attack
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    In this task you will initiated an L7 DDoS attack on the hackazon
+    virtual server, from eth1 and 10.1.10.53 will be the source-IP used
+    for the L7 DDoS script. This source IP will match
+    XFF\_mixed\_Attacker\_Good\_iRule and a X-Forward For header will be
+    placed in the HTTP request in the 132.173.99.0/24 IP address range.
+
+    Once the attack begins the BIG-IP WAF (ASM) will immediately switch
+    into Attack mode, because the server health deteriorates almost
+    immediately. As the server gets totally overwhelmed, you may at
+    first the good script dropping requests. *That’s why BaDoS first
+    mitigates with a global rate limit just to protect the server*. In a
+    short time, the good script will go back to 200 OK. During this time
+    BaDoS starts to generate **Dynamic Signatures** to identify the bad
+    traffic and mitigates on that level. The server health will get
+    better and after a short while because only **Dynamic Signatures**
+    will be blocking traffic.
+
+1. On the BIG-IP open a tab/window, go to **Security ›› DoS Protection :
+   Signatures** click on the **Dynamic** box and set the **Refresh** to
+   **20 secs**. Open another tab/window and go to **Security ››
+   Reporting : DoS : Dashboard**. The dashboard is NOT realtime, in may
+   take up to 10 minutes for traffic to display.
+
+2. On the xjumpbox open a NEW terminal window. From your home directory
+   enter:
+
+    # ./AB\_DOS.sh
+
+a. Select **2** – Attack start - score
+
+1. Take a view on the **Security ›› DoS Protection : Signatures** in the
+   BIG-IP GUI and you will see the created Signature. When you click on
+   the signature (NOT on the blue link, but somewhere on the signature
+   bar), you will get the details about the Signature, which is in
+   Wireshark format.
+
+|image14|
+
+1. At the BIG-IP CLI prompt using the following command you will get you
+   a list of all grey-listed IPs (bad actors).
+
+    ipidr -l /Common/vs\_hackazon\_http+/Common/hackazon\_bados
+
+    |image15|
+
+They all have a TTL, which indicated their live-time. Before they
+time-out, BaDOS will check if they are still attacking. If this is the
+case, the TTL gets increased again, otherwise the IP get released again.
+
+When this happens, you will see on the “Mitigation Panel” traffic marked
+as “Quarantine”.
+
+1. In the terminal window where you are performing you attack enter:
+
+   a. **<ctrl>C** then **3** then **4** to close down the attack
+      cleanly.
+
+2. View the **Security ›› Reporting : DoS : Dashboard**, this is not
+   real time. It may take up to 10 minutes for the attack to show.
+
+Exercise 2 - Mitigating BoT Attacks
+===================================
+
+Mitigating Bots using a DOS profile
+-----------------------------------
+
+Objectives:
+
+-  Scan the web site using a spider (OWASP ZAP)
+
+-  Create a Denial of Service Profile
+
+-  Enable the Proactive Bot Defense
+
+-  Associate the DoS profile with an existing virtual server
+
+-  Estimated time for completion: **15 minutes**
+
+Initiate a bot attack
+~~~~~~~~~~~~~~~~~~~~~
+
+You are now going to use the OWASP ZAP tool to run a spider bot attack
+against the Hackazon website.
+
+1. From the **Applications Menu** in the upper left-hand corner of the
+   jumpbox go to **OWASP > Proxies > ZAP**.
+
+2. Once ZAP is open, click on **Start** when asked **Do you want to
+   persist the ZAP session**.
+
+3. In the **Quick Start** tab, in the **URL Attack** box, enter
+   http://hackazon.f5demo.com and hit the **Attack** button\ **.**
+
+    |image16|
+
+1. Once the attack has started a **Spider** tab should appear in the
+   bottom ZAP window. You will see ZAP crawling the web site. Stop the
+   attack after you have observed this.
+
+    |image17|
+
+Creating/Modifying a DoS Profile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now you will modify your DoS profile to prevent malicious bots from
+attacking the Hackazon web site.
+
+1. Create/modify a DoS profile using the information in the following
+   table. Go to you **hackazon\_bados** profile and select the
+   **Application Security** tab.
+
+2. Select under **Application Security** select **Proactive Bot
+   Defense** and the **Edit All** link.
+
+3. Modify the properties of the DoS Profile by opening the new DoS
+   Profile and customize the profile using the information in the table
+   below. Set the **Operation Mode** to **Always**, make sure both boxes
+   are checked in the **Block requests from suspicious browsers**
+   section. The **Grace Period** should be set to **5** seconds and
+   **Cross-Domain Request** should be set to **Allow all requests**.
+   (see figure below). **DO NOT HIT UPDATE YET** for lab purposes.
+
+|image18|
+
+1. Under **Application Security** select **Bot Signatures** and change
+   the **Malicious Categories** section to **Block**.
+
+   |image19|
+
+1. Now click on the **Update** button at the bottom of the page.
+
+    **NOTE:** If you are still running the baseline\_menu.sh with “good”
+    traffic, you may start seeing drops or 307s. This is because some of
+    the random user agents are actually bot signatures.
+
+1. Using the OWASP ZAP tool, attack the website again. Notice this time
+   the attack was stopped.
+
+|image20|
+
+1. If you run the AB\_DOS.sh script again you will find the DoS attack
+   is blocked by BoT mitigation saving the network and the BIG-IP from
+   unnecessary traffic.
+
+2. On you DoS Dashboard you can see information about the BoT attacks
+
+|image21|
+
+.. |image0| image:: media/image1.png
+   :width: 1.93667in
+   :height: 0.61667in
+.. |image1| image:: media/image2.png
+   :width: 6.59740in
+   :height: 6.73203in
+.. |image2| image:: media/image3.png
+   :width: 3.77500in
+   :height: 2.87104in
+.. |image3| image:: media/image4.png
+   :width: 3.36587in
+   :height: 3.04167in
+.. |image4| image:: media/image5.png
+   :width: 3.67316in
+   :height: 1.64455in
+.. |image5| image:: media/image6.png
+   :width: 4.17536in
+   :height: 2.11178in
+.. |image6| image:: media/image7.png
+   :width: 4.26789in
+   :height: 3.18483in
+.. |image7| image:: media/image8.png
+   :width: 4.31754in
+   :height: 1.02821in
+.. |image8| image:: media/image9.png
+   :width: 3.41706in
+   :height: 2.49689in
+.. |image9| image:: media/image10.png
+   :width: 3.14894in
+   :height: 3.14894in
+.. |image10| image:: media/image11.png
+   :width: 2.05210in
+   :height: 1.69793in
+.. |image11| image:: media/image12.png
+   :width: 3.29097in
+   :height: 0.41319in
+.. |image12| image:: media/image13.png
+   :width: 0.38298in
+   :height: 0.41677in
+.. |image13| image:: media/image14.png
+   :width: 6.04739in
+   :height: 1.38762in
+.. |image14| image:: media/image15.png
+   :width: 6.91667in
+   :height: 2.98958in
+.. |image15| image:: media/image16.png
+   :width: 5.64437in
+   :height: 2.98936in
+.. |image16| image:: media/image17.png
+   :width: 3.97688in
+   :height: 1.88376in
+.. |image17| image:: media/image18.png
+   :width: 5.61272in
+   :height: 1.45295in
+.. |image18| image:: media/image19.png
+   :width: 6.22016in
+   :height: 4.77660in
+.. |image19| image:: media/image20.png
+   :width: 5.98606in
+   :height: 1.74468in
+.. |image20| image:: media/image21.png
+   :width: 5.28902in
+   :height: 1.33034in
+.. |image21| image:: media/image22.png
+   :width: 7.30556in
+   :height: 3.68542in

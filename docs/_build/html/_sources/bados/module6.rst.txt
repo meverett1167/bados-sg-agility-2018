@@ -1,0 +1,47 @@
+.. _module6:
+
+Mitigate Application Layer DoS Attack with Bad Actor Detection and Request Signatures
+======================================================================================
+In the previous modules, we examined both request signature detection and bad actor detection mitigations individually.  In this module, we will enable both mitigations together, and explore how they operate in tandem to mitigate a DoS attack.
+
+1.  Navigate to **Security ›› DoS Protection : DoS Profiles** and click the hackazon_bados profile we created earlier.
+
+2.  Click the **Application Security** tab, and then click **Behavioral & Stress-based Detection** button in the Application Security panel.
+
+3.  Click the **Edit** link to the right of the **Behavioral Detection and Mitigation** section, then verify checkbox for **Bad actors behavior detection** is checked, and then check the box next to **request signatures detection**
+
+4.  Scroll down, and click **Update** button.
+
+5.  From the |xj| open another Terminal window, or return to a previously opened window.  Then:
+
+   .. code-block:: console
+    
+      f5student@xjumpbox$~ ssh root@10.1.1.245
+
+
+6.  From the SSH session, run the following command: 
+
+   .. code-block:: console
+
+      [root@bigipo01:Active:Standalone] config # watch ipidr -l /Common/vs\_hackazon\_http+/Common/hackazon\_bados
+
+
+7.   From the |xj| open another Terminal window, or return to a previously opened window.  Then, re-run the attack script using the following command:
+
+   .. code-block:: console
+
+      f5student@xjumpbox~$ ./AB_DOS.sh
+        
+      - Select **2** – Attack start - score
+
+
+8.  Using Chromium Browser on the |xj|, open another tab to the GUI on bigip01, and navigate to **Security ›› Event Logs ››  DoS ›› Application Events**
+
+9.  Almost immediately you should see an attack has started, and |awaf| has assigned an Attack ID to the event.  You will see something similar to the screenshot below:
+   
+   |event-log-bados-start| 
+
+10.  Using Chromium Browswer on the |xj|, open another tab to the GUI on bigip01, and navigate to **Security ›› DoS Protection:Signatures**, and click on the **Dynamic** box, then set the **Refresh** value to **20 secs**
+
+
+
