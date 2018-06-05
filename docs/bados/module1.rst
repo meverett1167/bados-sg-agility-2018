@@ -37,12 +37,12 @@ In the section you will create a DoS profile with **Behavioral Detection and Ana
 
 6. Select the **Bot Signatures** section, then select the **Edit** link to the right of **Bot Signature Check**, and check the **Enabled** box. 
     
-   .. Attention:: The message in red below the **Enabled** box indicates a DNS Resolver has not been set up. The DNS resolver is used to perform DNS reverse lookups as part bot identity validation, but is not relevant for this lab exercise. 
-
-
    Select **Edit** next to **Bot Signature Categories** then change both the **Malicious Categories** and **Benign Categories** to **Report**. This step is necessary because the tools used to generate baseline and attack traffic in this lab will both be categorized as bots. 
 
    |dos-prof-bot-sigs-marked|
+
+   .. Attention:: The message in red below the **Enabled** box indicates a DNS Resolver has not been set up. The DNS resolver is used to perform DNS reverse lookups as part bot identity validation, but is not relevant for this lab exercise. 
+
 
 
 7. Select **TPS-base DoS Detection** and change **Operation Mode** to **Off**.
@@ -96,7 +96,7 @@ Below steps associate this profile with the |ltm| virtual server processing the 
 
 Create XFF-Mixed_Attacker iRule
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Because we do not have dozens of good and bad source IPs available for clients and attackers in this environment, we simulate them by adding an iRule to the virtual server, which adds a randomized X-Forwarded-For (XFF) header to each request, and an http profile which inserts the XFF into the HTTP headers prior to |awaf| processing
+Because we do not have dozens of good and bad source IPs available for clients and attackers in this environment, we simulate them by adding an iRule to the virtual server.  The iRule adds a randomized X-Forwarded-For (XFF) header to each request.  
 
 1. Navigate to **Local Traffic ›› iRules : iRule List** and select **Create.** Name a new iRule named **XFF\_mixed\_Attacker\_Good\_iRule.** Copy and paste the iRule below.
 
@@ -203,7 +203,7 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
       - **Desired Value**: Must be 100 for signatures
 
 
-   .. NOTE:: It may take 5 or more minutes before you begin to get learned baseline numbers.  Also, the desired values are the minimum values we would like to see prior to triggering attacks as part of this lab exercise. You can, however, move onto module 2 and 3 in this lab while baselines are being established.  **do not stop baseline traffic script**
+   .. NOTE:: It may take 5 or more minutes before you begin to get learned baseline numbers.  Also, the desired values are the minimum values we would like to see prior to triggering attacks as part of this lab exercise. You can, however, move onto module 2 and 3 in this lab while baselines are being established.  **Do not stop baseline traffic script**
         
     
    To see all of the values available and wide range of interesting statistics, enter the following command from |bip| console:
@@ -249,5 +249,5 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
    :height: 2.73203in
 
 .. |shell-admd-output| image:: _images/shell-admd-output.png
-   :width: 5.59740in
+   :width: 7.59740in
    :height: 2.33203in

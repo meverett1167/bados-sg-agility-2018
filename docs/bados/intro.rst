@@ -15,7 +15,6 @@ Lab Topology
 ^^^^^^^^^^^^^
 |image1|
 
-
 Lab Components
 ^^^^^^^^^^^^^^^
 
@@ -67,9 +66,9 @@ Please follow the instructions below to access the lab environment used for this
 
 F5 BIG-IP Base Configuration Steps
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Complete the following steps to get you F5 BIG-IP's configured and ready to complete remaining lab steps.
+Complete the following steps to get your F5 BIG-IP's configured and ready to complete remaining lab steps.
 
-.. TODO::should we just do this advance?
+.. TODO:: should we just do this advance?
 
 1. Open the Chrome browser and log into the |bip| GUI to verify the
    |bip| is up.

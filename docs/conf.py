@@ -76,8 +76,8 @@ rst_prolog = """
 .. |f5i| replace:: F5 Networks, Inc.
 .. |awaf| replace:: Advanced Web Application Firewall
 .. |xj| replace:: Xubuntu Jumpbox
-.. |kw| replace: Kali Linux Workstation
-.. |dhd| replace: DDoS Hybrid Defender
+.. |kw| replace:: Kali Linux Workstation
+.. |dhd| replace:: DDoS Hybrid Defender
 .. |year| replace:: %s
 """ % (classname,
        classname,
