@@ -5,9 +5,9 @@ Bad Actor Detection and Request Signatures
 In the previous modules, we examined both request signature detection and bad actor detection mitigations individually.  In this module, we will enable both mitigations together, and explore how they operate in tandem to mitigate a DoS attack.  Additionally, we will use |awaf|'s DoS Reporting tools to further inspect the details of each attack.
 
 
-1.  Using Chromium Browser on the |xj|, open another tab to the GUI on bigipo01
+1.  Using Chromium Browser on the |xj|, open another tab to the GUI on bigip01
 
-2.  Navigate to **Security ›› DoS Protection : DoS Profiles** and click the hackazon_bados profile we created earlier.
+2.  Navigate to **Security ›› DoS Protection : DoS Profiles** and click the **hackazon_bados** profile we created earlier.
 
 3.  Click the **Application Security** tab, and then click **Behavioral & Stress-based Detection** button in the Application Security panel.
 
@@ -108,7 +108,7 @@ Bonus
 ^^^^^^
 The exercise above shows Request Signatures and Bad Actor Detection working in tandem to mitigate an attack.  However, we have a relatively small set of attackers, so almost immediately |awaf| will identify all the bad actors, and the attack will be 100% mitigated with bad actor detection.  In the real world, it is highly likely the set of attackers will be very large and dynamic.  So, it is quite possible, that as soon as bad actors are detected, the attacking sources will change.  At that point, you will see an attack being mitigated by both request signatures and bad actors.  Try the below steps to simulate this activity.
 
-1.  Return to the iRule configured in module 1 (:ref:`_XFF_iRule`)
+1.  Return to the iRule configured in module 1 (:ref:`_XFF_mixed_Attacker_Good_iRule`)
 2.  Modify line #10 to match below and click **Update**
    .. code-block:: tcl
       :linenos:
