@@ -56,7 +56,7 @@ In the section you will create a DoS profile with **Behavioral Detection and Ana
 
    b. Under **Stress-based Detection and Mitigation** edit **By SourceIP** and uncheck **Request Blocking.** Under **By URL** uncheck **Heavy URL Protection** and **Request Blocking**.
 
-   c. Under Behavioral Detection and Mitigation check the **Request signatures detection** and set the **Mitigation** to **Standard**.  For now, please leave **bad actors detection** unchecked.
+   c. Under **Behavioral Detection and Mitigation** check the **Request signatures detection** and set the **Mitigation** to **Standard**.  For now, please leave **bad actors detection** unchecked.
 
    d. Click **Update** in the lower left-hand corner. Collapse all the sections, and **Behavioral & Stress-based Detection** should match the figure below.
 
@@ -129,12 +129,14 @@ Create HTTP Profile to Accept X-Forwarded-For HTTP Header
 
 2. Click **Finished** button at bottom of configuration page.
 
+.. TIP:: Due to large number of service profiles, occassionally part of the Services menu will get stuck under the browser menu.  If that happens, click on **Profiles** on the side-bar, then click **Services** in the top navigation bar to get to the HTTP profile.
+
 
 Attach iRule and HTTP Profile to |ltm| Virtual Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-1. Navigate to the **vs\_hackazon\_http** virtual server. In the **Properties** tab, under **Configuration** section, select **xff\_http** for the **HTTP Profile**. Click the **Resources** tab in virtual server navigation bar, in the **iRules** section select the **Manage** button, and move **XFF\_mixed\_Attacker\_Good\_iRule** from the **Available** to the **Enabled** box.
-2.  Click **Finished** button at bottom of Resource Management page.
-3.  Click **Update**  below load balancing and persistence profile options.
+1. Navigate to the **vs\_hackazon\_http** virtual server. In the **Properties** tab, under **Configuration** section, select **xff\_http** for the **HTTP Profile**. 
+2. Click the **Resources** tab in the virtual server navigation bar, in the **iRules** section select the **Manage** button, and move the **XFF\_mixed\_Attacker\_Good\_iRule** from the **Available** to the **Enabled** box. 
+3.  Click **Finished** button at bottom of the Resource Management page.
 
 
 Generate Traffic to Establish Baseline
