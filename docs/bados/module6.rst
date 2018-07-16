@@ -108,7 +108,7 @@ Bonus
 ^^^^^^
 The exercise above shows Request Signatures and Bad Actor Detection working in tandem to mitigate an attack.  However, we have a relatively small set of attackers, so almost immediately |awaf| will identify all the bad actors, and the attack will be 100% mitigated with bad actor detection.  In the real world, it is highly likely the set of attackers will be very large and dynamic.  So, it is quite possible, that as soon as bad actors are detected, the attacking sources will change.  At that point, you will see an attack being mitigated by both request signatures and bad actors.  Try the below steps to simulate this activity.
 
-1.  Return to the iRule configured in module 1 (:ref:`_XFF_iRule`)
+1.  Return to the iRule configured in module 1 (:ref:`XFF_iRule`)
 2.  Modify line #10 to match below and click **Update**
    .. code-block:: tcl
       :linenos:
