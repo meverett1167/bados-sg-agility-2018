@@ -8,6 +8,8 @@ In this module, we will review the various settings and options that make up a l
 Review DoS Profile General Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Navigate to **Security ›› DoS Protection ›› DoS Profiles** and click the DoS profile **hackazon_bados** created earlier for this module.
+ 
 Settings in this screen are profile wide, and can affect all aspects of the dos configuration.
 
 |gen-settings|
@@ -49,5 +51,6 @@ Settings in this screen are profile wide, and can affect all aspects of the dos 
 .. |geolocs| image:: _images/geolocs.png
    :width: 6.2740in
    :height: 1.53203in
+
 
 

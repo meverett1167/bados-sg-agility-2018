@@ -6,8 +6,9 @@ In this module, we will review the various settings for configuring Stress-based
 
 Review Stress-Based Dos Profile Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 To appreciate the powerful nature of |awaf|'s Behavioral DoS feature, it first makes sense to analyze one of the other L7 DoS protection mechanisms.  For this exercise, we will examine the options and behaviors of the Stress-based DoS protections available in an Application Security DoS profile.
+
+To review the settings below, navigate to **Security ›› DoS Protection ›› DoS Profiles**, click the DoS profile **hackazon_bados** created earlier for this module, then click **Behavioral & Stress-based Detection** in the **Application Security** navigation menu, and set the **Operation Mode** to **Transparent**.
 
 |stressbased|
 

@@ -58,7 +58,7 @@ Once the attack begins the BIG-IP WAF (ASM) will immediately switch into attack 
 
 11.  In the window where you are running the attack script, enter **CTRL-C**, they type **4** to kill the attack script cleanly.  
 
-12.  Delete all attack signatures created during this module.
+12.  Using Chromium Browser, navigate to **Security ›› DoS Protection:Signatures** and click on the **Dynamic** box.  Then click the check box next to the Name column to select all signatures, and click delete to remove all attack signatures created during this module.
 
 13.  Leave **baseline_menu.sh** script running.
 

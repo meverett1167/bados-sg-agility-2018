@@ -12,7 +12,7 @@ In this module, we will configure the base DoS profile and |ltm| objects used in
       * Verify BaDOS learning status
 
 
-.. Attention:: In this lab, you will configure a number of options to get the lab started.  In modules 2 and 3 we will spend time examining the configuration options in more detail.  For now, just configure the options as outlined, and we will examine further in later modules.
+.. Attention:: In this lab, you will configure a number of options to get the lab started.  In modules 3 and 4 we will spend time examining the configuration options in more detail.  For now, just configure the options as outlined, and we will examine further in later modules.
 
 Set up the DoS profile
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -155,7 +155,7 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
 
    .. code-block:: console
 
-      f5student@xjumpbox$~ ./baseline_menu.sh
+      f5student@xjumpbox~$ ./baseline_menu.sh
 
       - Select option 2 **alternate** and keep it running in the window
 
@@ -178,11 +178,16 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
 
       - /Common/vs_hackazon_http  – is the name of the virtual server
       - /Common/hackazon_bados    – is the name of the DoS profile.
+      **It may take several minutes for baseline numbers to be generated**
 
 
    Screenshot of sample output below:
 
    |shell-admd-output|
+
+
+   .. TIP:: If your aren't getting any output, or seeing no signs of accumulated signals, verify the name of the virtual server and profile in the admd command are accurate.
+
 
    1. **baseline\_learning\_confidence**: 
       
@@ -205,7 +210,7 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
       - **Desired Value**: Must be 100 for signatures
 
 
-   .. NOTE:: It may take 5 or more minutes before you begin to get learned baseline numbers.  Also, the desired values are the minimum values we would like to see prior to triggering attacks as part of this lab exercise. You can, however, move onto module 2 and 3 in this lab while baselines are being established.  **Do not stop baseline traffic script**
+   .. NOTE:: It may take 5 or more minutes before you begin to get learned baseline numbers.  Also, the desired values are the minimum values we would like to see prior to triggering attacks as part of this lab exercise. You can, however, move onto module 3 and 4 in this lab while baselines are being established.  **Do not stop baseline traffic script**
         
     
    To see all of the values available and wide range of interesting statistics, enter the following command from |bip| console:
