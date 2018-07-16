@@ -10,7 +10,7 @@ Once the attack begins the BIG-IP WAF (ASM) will immediately switch into attack 
 2.  Navigate to **Security ›› DoS Protection:Signatures** and click on the **Dynamic** box, then set the **Refresh** value to **20 secs**. 
 3.  Open another tab/window in Chromium Browser, and go to **Security ››Reporting : DoS : Dashboard**. The dashboard is NOT realtime in may take up to 10 minutes for traffic to display.
 
-4.  Revisit the Terminal window opened which is monitoring behavioral DoS learning signals.  Verify the first number (baseline\_learning\_confidence) is at or above 90%.
+4.  Revisit the Terminal window opened which is monitoring behavioral DoS learning signals.  Verify the first number (baseline\_learning\_confidence) is at or above 80%.  Normally, above 90% would be ideal, but for the purposes of this lab over 80% will suffice.
 
 5.  Revisit the Terminal window opened which is running the baseline traffic generation script.  Make note of the normal, pre-attack, response time for each request.
 
@@ -60,7 +60,7 @@ Once the attack begins the BIG-IP WAF (ASM) will immediately switch into attack 
 
 12.  Delete all attack signatures created during this module.
 
-13.  Leave baseline_menu.sh script running.
+13.  Leave **baseline_menu.sh** script running.
 
 .. |event-log-bados-start| image:: _images/event-log-bados-start.png
    :width: 6.59740in
