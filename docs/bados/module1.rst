@@ -160,7 +160,7 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
       - Select option 2 **alternate** and keep it running in the window
 
 
-   .. TIP:: This is your valid traffic and the number of requests does changes over time. The requests also change as the script continuously alters the User-Agent header and the requested URI. Both values are randomly taken from files in the “source” directory in the home directory.
+   .. TIP:: This is your valid traffic, and the number of requests does change over time. The requests also change as the script continuously alters the User-Agent header and the requested URI. Both values are randomly taken from files in the “source” directory in the home directory.
 
 
 2.  Next, validate you are seeing the traffic, and |awaf| is actively building learning baselines. From a separate Terminal window type:

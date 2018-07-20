@@ -24,7 +24,7 @@ To review the settings below, navigate to **Security ›› DoS Protection ›�
 3. **Stress-based Detection Options**
    |awaf| can trigger an attack if any/all of the following detection methods exceed the thresholds defined or calculated for the detection method:
       * **By Source IP**: A specific source IP has exceeded the thresholds defined in the detection thresholds.
-      * **By Device ID**: A specific device has exceeded the thresholds defined in the detection thresholds.  Device ID is ASM calculating a fingerprint for a given device.  The feature requires Javascript injection to proper operation.  However, offers benefit of detecting a specific device even if the attack varies its source IP address.
+      * **By Device ID**: A specific device has exceeded the thresholds defined in the detection thresholds.  Device ID is ASM calculating a fingerprint for a given device.  The feature requires Javascript injection for proper operation.  However, the feature offers the benefit of detecting a specific device, even if the attack varies its source IP address.
       * **By Geolocation**: A country/geolocation has exceeded the thresholds defined in the detection thresholds.
       * **By URL**: Request traffic to a specific (or set of URL's identified in URL patterns section of the DoS Profile General Properties) has exceeded the thresholds defined in the detection thresholds.
       * **Site Wide**: Request traffic to the entire web site has exceeded the thresholds defined in the detection thresholds, **and** an attack has not been detected using any of the other detection criteria.  Site-wide is considered last resort.
@@ -45,7 +45,7 @@ Having reviewed the options for configuring Stress-based dos mitigation, now let
 2. **Request Signature Detection**
    Determines wheither Behavioral DoS engine will attempt to generate a traffic signature to block anamolous traffic.  |awaf| Behavioral DoS feature is in a permanent learning state, always tracking application requests, and the construction of these requests, and then comparing to an evolving baseline.  When Request Signatures Detection is enabled, once |awaf| detects server stress, it looks to identify traffic characteristics which have deviated from the baseline.  If there are deviating characteristics, the Behavioral DoS engine, then dynamically generates a signature based on these deviating characteristics to block anamolous traffic. 
 
-      .. NOTE:: In addition to generating signatures, the Behavioral DoS Engine, also continually evaluates the signature for efficacy, minimizing risk of signature becoming false positive and blocking known good traffic.
+      .. NOTE:: In addition to generating signatures the Behavioral DoS Engine also continually evaluates the signature for efficacy, minimizing risk of signature becoming false positive and blocking known good traffic.
 
 3. **Use Approved Signatures Only**
    By default, when Request Signatures Detection is enabled, |awaf| will generate and use dynamically generated attack signatures as defined by the mitigation mode selection.  By enabling this option, the administrator overrides this behavior, and forces a manual step to review and approve the signature prior to any mitigations taking effect.  Signatures can be reviewed from |awaf| GUI via **Security** -> **DoS Protection** -> **Signatures**
