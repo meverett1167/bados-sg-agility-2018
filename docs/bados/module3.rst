@@ -48,20 +48,19 @@ Having reviewed the options for configuring Stress-based dos mitigation, now let
       .. NOTE:: In addition to generating signatures the Behavioral DoS Engine also continually evaluates the signature for efficacy, minimizing risk of signature becoming false positive and blocking known good traffic.
 
 3. **Use Approved Signatures Only**
-   By default, when Request Signatures Detection is enabled, |awaf| will generate and use dynamically generated attack signatures as defined by the mitigation mode selection.  By enabling this option, the administrator overrides this behavior, and forces a manual step to review and approve the signature prior to any mitigations taking effect.  Signatures can be reviewed from |awaf| GUI via **Security** -> **DoS Protection** -> **Signatures**
+   By default, when Request Signatures Detection is enabled, |awaf| will generate and use dynamically generated attack signatures as defined by the mitigation mode selection.  By enabling this option, the administrator overrides this behavior, and forces a manual step to review and approve the signature prior to any mitigations taking effect.  Signatures can be reviewed from |awaf| GUI via **Security** -> **DoS Protection** -> **Signatures**.
 
-   .. TODO:: Add screenshot of request signature approval option
+
+      |sigs-approval|
+
+    
+      Once a signature has been approved, the Signature Approval State for the signature will change to "Manually-approved".  When approved signatures only is selected, only signatures which have been approved will be active.
 
 
 4. **Mitigation**
    Defines the mitigation mode for |awaf| Behavioral DoS.  Options include:
       * **No Mitigation**: 
          * Monitors traffic, generates signatures, and identifies bad actors, but does not perform any mitigation.
-      
-
-      ..TODO:: verify bad actors generated
-      
-
       * **Conservative Protection**: 
          * **If** Bad Actors Behavior Detection is enabled, slows down bad identified bad actors.
          * **If** Request Signatures Detection is enabled, blocks requests that match attack signatures
@@ -104,3 +103,7 @@ After reviewing several options for both Stress-based and Behavioral DoS feature
 .. |bados| image:: _images/bados.png
    :width: 6.59740in
    :height: 3.33203in
+
+.. |sigs-approval| image:: _images/sigs-approval.png
+   :width: 6.59740in
+   :height: 2.33203in
