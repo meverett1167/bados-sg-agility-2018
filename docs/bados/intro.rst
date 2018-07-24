@@ -51,9 +51,7 @@ Accessing Lab Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Please follow the instructions below to access the lab environment used for this lab.
 
-1. Open a browser and go to `http://training.f5agililty.com/<lab
-       number>/X <http://training.f5agililty.com/%3clab%20number%3e/X>`__
-       (where **X** is your student number)
+1. Open a browser and go to `http://training.f5agililty.com/<lab number>/X <http://training.f5agililty.com/%3clab%20number%3e/X>` (where **X** is your student number)
 
     a. Look for the **xubuntu-jumpbox-vxx**. You will use the |xj| for all the labs. (see below)
 
