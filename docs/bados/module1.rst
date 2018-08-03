@@ -18,7 +18,7 @@ Set up the DoS profile
 ^^^^^^^^^^^^^^^^^^^^^^
 In the section you will create a DoS profile with **Behavioral Detection and Analysis** enabled, and attach the DoS profile to the virtual server. 
 
-1. Using Chromium Browser on the |xj|, open tab to the GUI on bigip01 (https://10.1.1.245).
+1. Using Chromium Browser on the |xj|, open a tab to the GUI on bigip01 (https://10.1.1.245).
 2. Navigate to **Security ›› DoS Protection : DoS Profiles**
 3. Select **Create**. Name your profile **hackazon\_bados** and select **Finished**. Open your **hackazon\_bados** DoS profile.
 4. Select the **Application Security** tab from DoS Profile navigation bar.
@@ -41,7 +41,7 @@ In the section you will create a DoS profile with **Behavioral Detection and Ana
 
    |dos-prof-bot-sigs-marked|
 
-   .. Attention:: The message in red below the **Enabled** box indicates a DNS Resolver has not been set up. The DNS resolver is used to perform DNS reverse lookups as part bot identity validation, but is not relevant for this lab exercise. 
+   .. Attention:: The message in red below the **Enabled** box indicates a DNS Resolver has not been set up. The DNS resolver is used to perform DNS reverse lookups as part of bot identity validation, but is not relevant for this lab exercise. 
 
 
 
@@ -64,7 +64,7 @@ In the section you will create a DoS profile with **Behavioral Detection and Ana
 
 Create a DoS Logging Profile
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Logging profiles are required to enable local and remote logging for Application DoS and Bot events.  In this lab, we will use local logging to review events.  Below steps configure the logging profile, and attach to your test virtual server.
+Logging profiles are required to enable local and remote logging for Application DoS and Bot events.  In this lab, we will use local logging to review events.  Below are the steps to configure the logging profile and attach to your test virtual server.
 
 1. Go to **Security ›› Event Logs : Logging Profiles** and click **Create** on right-hand side of the configuration screen. Name your profile **l7\_dos\_bot\_logger** then check the **DoS Protection** and **Bot Defense** enable boxes.
 
@@ -80,7 +80,7 @@ Logging profiles are required to enable local and remote logging for Application
 Add the DoS profile to a virtual server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Below steps associate this profile with the |ltm| virtual server processing the application traffic in this lab.
+Below are the steps to associate this profile with the |ltm| virtual server processing the application traffic in this lab.
 
 1. Navigate to **Local Traffic > Virtual Servers > Virtual Server List** and select **vs\_hackazon\_http**. Under the **Security** tab on the top bar select **Policies**.
 
@@ -125,11 +125,11 @@ Because we do not have dozens of good and bad source IPs available for clients a
 Create HTTP Profile to Accept X-Forwarded-For HTTP Header
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Navigate to **Local Traffic ›› Profiles : Services : HTTP** and click **Create**. Name the new http profile **xff\_http**, and click the righmost checkbox in the row **Accept XFF** to enable a custom setting, then click the checkbox to the immediate right of **Accept XFF** to enable processing of an inbound X-Forwarded-For header.
+1. Navigate to **Local Traffic ›› Profiles : Services : HTTP** and click **Create**. Name the new http profile **xff\_http**, and click the rightmost checkbox in the row **Accept XFF** to enable a custom setting, then click the checkbox to the immediate right of **Accept XFF** to enable processing of an inbound X-Forwarded-For header.
 
 2. Click **Finished** button at bottom of configuration page.
 
-.. TIP:: Due to large number of service profiles, occassionally part of the Services menu will get stuck under the browser menu.  If that happens, click on **Profiles** on the side-bar, then click **Services** in the top navigation bar to get to the HTTP profile.
+.. TIP:: Due to a large number of service profiles, occasionally part of the Services menu will get stuck under the browser menu.  If that happens, click on **Profiles** on the side-bar, then click **Services** in the top navigation bar to get to the HTTP profile.
 
 
 Attach iRule and HTTP Profile to |ltm| Virtual Server
@@ -160,7 +160,7 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
       - Select option 2 **alternate** and keep it running in the window
 
 
-   .. TIP:: This is your valid traffic, and the number of requests does change over time. The requests also change as the script continuously alters the User-Agent header and the requested URI. Both values are randomly taken from files in the “source” directory in the home directory.
+   .. TIP:: This is your valid traffic, and the number of requests will change over time. The requests also change as the script continuously alters the User-Agent header and the requested URI. Both values are randomly taken from files in the “source” directory in the home directory.
 
 
 2.  Next, validate you are seeing the traffic, and |awaf| is actively building learning baselines. From a separate Terminal window type:
