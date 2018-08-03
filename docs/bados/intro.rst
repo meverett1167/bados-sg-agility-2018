@@ -62,56 +62,6 @@ Please follow the instructions below to access the lab environment used for this
         |image3|
 
 
-F5 BIG-IP Base Configuration Steps
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Complete the following steps to get your F5 BIG-IP's configured and ready to complete remaining lab steps.
-
-.. TODO:: should we just do this advance?
-
-1. Open the Chrome browser and log into the |bip| GUI to verify the
-   |bip| is up.
-
-   a. Go to **https://10.1.1.245**
-
-      i.  User: **admin**
-
-      ii. Password: **admin**
-
-2. Now you will perform an initial configuration via command line.
-
-   a. Open a terminal window from the taskbar at the bottom.
-
-      i.   Log in to the |bip| using the command: **ssh
-           root@10.1.1.245**
-
-      ii.  The password is **default.**
-
-      iii. At the |bip| prompt, enter **tmsh**
-
-           1. This will place you in the |bip| command line mode.
-
-   b. In your browser, open then the **Lab Guides** link on the
-      bookmarks bar in a new tab/window.
-
-   c. Open the **AdvWAF Base Setup.txt** file and review the commands.
-
-   d. Copy all the commands between **# BEGIN COPY - Lab prep** and **#
-      END COPY - Lab prep**
-
-   e. Paste the commands into the terminal window at the **tmsh**
-      prompt.
-
-   f. The BIG-IP will take several minutes to come back online.
-
-3. Verify the |bip| virtual server and web site are up and running.
-
-   a. Go to **Local Traffic >> Network Map**. There should be two
-      virtual servers, and both should be available (green).
-
-   b. Open up the Firefox browser. Go to http://hackazon.f5demo.com and
-      https://hackazon.f5demo.com
-
-
 .. |image1| image:: _images/image2.png
    :width: 6.59740in
    :height: 6.73203in
