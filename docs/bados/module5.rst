@@ -11,7 +11,7 @@ In the last module, you used request signature detection to mitigate an applicat
 
 3.  Click the **Edit** link to the right of the **Behavioral Detection and Mitigation** section, then check the checkbox for **Bad actors behavior detection**, and uncheck the box next to **request signatures detection**
 
-4.  Scroll down, and click **Update** button.
+4.  Scroll down, and click the **Update** button.
 
 5.  From the |xj| open another Terminal window.  Then:
 
@@ -26,9 +26,9 @@ In the last module, you used request signature detection to mitigate an applicat
 
       [root@bigipo01:Active:Standalone] config # watch ipidr -l /Common/vs_hackazon_http+/Common/hackazon_bados
 
-   Initially, because no attack is active, the IP list will be empty.  Keep this command running in one of the Terminal window.  Things are about to change!
+   Initially, because no attack is active, the IP list will be empty.  Keep this command running in one of the Terminal windows.  Things are about to change!
 
-7.  Using the Terminal window on the |xj| from previous module, or a new one, re-run the attack script using the following command:
+7.  Using the Terminal window on the |xj| from the previous module, or a new one, re-run the attack script using the following command:
 
    .. code-block:: console
 
@@ -53,9 +53,9 @@ In the last module, you used request signature detection to mitigate an applicat
    3. **Prod**: Number of stat producers.  In this environment, this should always be 1.
    4. **Tout**: Time-out/TTL. Prior to releasing an IP address from the greylist, |awaf| will quarantine the IP address for a period of time.  During this time, TCP slowdown methods will discontinue, and HTTP rate limiting will take over.  If during the quarantine period, the IP address triggers more attack traffic, the IP will be removed from quarantine and placed back in greylist.  Quarantined IP addresses are visible in the DoS Dashboard/Analytics views in the Mitigation panel.
 
-11. With the attack script still running, examine the output of the baseline script.  You should be getting HTTP 200 OK responses, and response time should be inline with pre-attack response times.  Also, verify you can use browse to http://hackazon.f5demo.com without issue.
+11. With the attack script still running, examine the output of the baseline script.  You should be getting HTTP 200 OK responses, and the response time should be inline with pre-attack response times.  Also, verify you can use browse to http://hackazon.f5demo.com without issue.
 
-12. In the window where you are running the attack script, enter **CTRL-C**, they type **4** to kill the attack script cleanly.
+12. In the window where you are running the attack script, enter **CTRL-C**, then type **4** to kill the attack script cleanly.
 
 13.  Leave baseline_menu.sh script running.
 
