@@ -9,7 +9,7 @@ In the previous modules, we examined both request signature detection and bad ac
 
 2.  Navigate to **Security ›› DoS Protection : DoS Profiles** and click the **hackazon_bados** profile we created earlier.
 
-3.  Click the **Application Security** tab, and then click **Behavioral & Stress-based Detection** button in the Application Security panel.
+3.  Click the **Application Security** tab, and then click the **Behavioral & Stress-based Detection** button in the Application Security panel.
 
 4.  Click the **Edit** link to the right of the **Behavioral Detection and Mitigation** section, then uncheck the checkbox next to **Bad actors behavior detection**, and check the box next to **Request signatures detection**
 
@@ -19,7 +19,7 @@ In the previous modules, we examined both request signature detection and bad ac
 
 7.  From the **DoS Dashboard** select the refresh drop down and set value to 1 min, and grab the slider bar at the top and drag it as far right as possible.
 
-8.  On the right side of the **DoS Dashboard**, grab the handle just to the right right of the HTTP and Network filter labels, and pull left to the midway point of the screen.
+8.  On the right side of the **DoS Dashboard**, grab the handle just to the right of the HTTP and Network filter labels, and pull left to the midway point of the screen.
 
 9.  Using the inner-most vertical scroller on the right-hand side of the screen, scroll down until you see the **Transaction Outcomes** dynamic panel.  Click the panel to expand, then click the three vertical lines to the left of the Transaction Outcomes label.  Click on **Columns**,  and click the green icon to remove all row labels except the following:
    * Transactions
@@ -72,7 +72,7 @@ In the previous modules, we examined both request signature detection and bad ac
 
    1.  DoS Dashboard view shows an attack has been triggered.  Select the attack, click the filter icon in upper right hand corner of Attacks table, and you can adjust the columns to view.
 
-   2.  This attack was initially mitigated with HTTP global rate limiting before a signature can be generated, accounted for in the **DoS Blocked** row.  Then, as an attack signature is generated, all attack traffic should begins to be blocked with the request signature(s), evident by looking at the **Blocked Bad Request** row in transaction outcomes.  At this point, if you refresh the dashboard, DoS Blocked counts should remain static, and Blocked Bad Request counters should be incrementing.
+   2.  This attack was initially mitigated with HTTP global rate limiting before a signature can be generated, accounted for in the **DoS Blocked** row.  Then, as an attack signature is generated, all attack traffic should begin to be blocked with the request signature(s), evident by looking at the **Blocked Bad Request** row in transaction outcomes.  At this point, if you refresh the dashboard, DoS Blocked counts should remain static, and Blocked Bad Request counters should be incrementing.
 
    3.  Behavioral DoS will generate and adjust signatures as the traffic changes.  This panel shows the signatures, referenced by signature name, that have been used to mitigate this attack.  
 
@@ -127,9 +127,11 @@ The exercise above shows Request Signatures and Bad Actor Detection working in t
                HTTP::header insert X-Forwarded-For $xff
          }
        }
-3.  Return to the browser tab monitoring the DoS Dashboard.  Shortly, after the iRule change you should now see the **Blocked Bad Request** counter incrementing again. In time, |awaf| will begin to learn all the new IP's as well, but you should have have enough time to see both mitigations active concurrently.
+3.  Return to the browser tab monitoring the DoS Dashboard.  Shortly, after the iRule change you should now see the **Blocked Bad Request** counter incrementing again. In time, |awaf| will begin to learn all the new IP's as well, but you should have enough time to see both mitigations active concurrently.
 
 4.  Return to the browser tab monitoring the Dynamic Request Signatures.  You should now see the attack signatures are again active and mitigating the attack until all new sources have been learned by bad actor detection.
+
+This completes the Introduction to L7 Behavioral DoS Self Guided Lab.  Thanks for attending the session, and have a great week at F5 Agility 2018!
 
 
 .. |event-log-bados-start| image:: _images/event-log-bados-start.png
