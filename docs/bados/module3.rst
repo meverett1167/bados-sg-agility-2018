@@ -43,9 +43,9 @@ Having reviewed the options for configuring Stress-based dos mitigation, now let
    Determines whether Behavioral DoS engine tracks and attempts to identify the bad actors contributing to a given set of malicious traffic.  When Bad Actor Behavior Detection is enabled, once |awaf| detects server stress  and identifies a set of malicious traffic contributing to the server stress, the Behavioral DoS engine then attempts to identify what source IP addresses are generating the malicious traffic, and what percentage of malicious traffic a given bad actor is contributing.  Bad actors, are mitigated at transport layer via slowdown mitigation techniques, and the rate at which they are mitigated is directly related to their percentage of contribution to the malicious traffic set, and the migitation mode selected.
 
 2. **Request Signature Detection**
-   Determines wheither Behavioral DoS engine will attempt to generate a traffic signature to block anamolous traffic.  |awaf| Behavioral DoS feature is in a permanent learning state, always tracking application requests, and the construction of these requests, and then comparing to an evolving baseline.  When Request Signatures Detection is enabled, once |awaf| detects server stress, it looks to identify traffic characteristics which have deviated from the baseline.  If there are deviating characteristics, the Behavioral DoS engine, then dynamically generates a signature based on these deviating characteristics to block anamolous traffic. 
+   Determines whether Behavioral DoS engine will attempt to generate a traffic signature to block anamolous traffic.  |awaf| Behavioral DoS feature is in a permanent learning state, always tracking application requests, and the construction of these requests, and then comparing to an evolving baseline.  When Request Signatures Detection is enabled, once |awaf| detects server stress, it looks to identify traffic characteristics which have deviated from the baseline.  If there are deviating characteristics, the Behavioral DoS engine, then dynamically generates a signature based on these deviating characteristics to block anamolous traffic. 
 
-      .. NOTE:: In addition to generating signatures the Behavioral DoS Engine also continually evaluates the signature for efficacy, minimizing risk of signature becoming false positive and blocking known good traffic.
+      .. NOTE:: In addition to generating signatures the Behavioral DoS Engine also continually evaluates the signature for efficacy, minimizing the risk of signature becoming false positive and blocking known good traffic.
 
 3. **Use Approved Signatures Only**
    By default, when Request Signatures Detection is enabled, |awaf| will generate and use dynamically generated attack signatures as defined by the mitigation mode selection.  By enabling this option, the administrator overrides this behavior, and forces a manual step to review and approve the signature prior to any mitigations taking effect.  Signatures can be reviewed from |awaf| GUI via **Security** -> **DoS Protection** -> **Signatures**.
@@ -84,15 +84,15 @@ Having reviewed the options for configuring Stress-based dos mitigation, now let
 
 Summarizing Key Points
 ^^^^^^^^^^^^^^^^^^^^^^^^
-After reviewing several options for both Stress-based and Behavioral DoS features, the goal of this section is to call out some key points which might be overlooked reviewing configuration options:
+After reviewing several options for both Stress-based and Behavioral DoS features, the goal of this section is to call out some key points which might be overlooked when reviewing configuration options:
 
-   * All DoS features are complementary to |awaf| web application firewall (WAF) and bot protection features.  DoS features mitigate traffic that exceed a certain rate, or induce server-side stress.  This traffic is, many times, is completely legitimate traffic which will not trigger a WAF block.
+   * All DoS features are complementary to |awaf| web application firewall (WAF) and bot protection features.  DoS features mitigate traffic that exceeds a certain rate or induces server-side stress.  This traffic is, many times, completely legitimate traffic which will not trigger a WAF block.
 
    * Heavy URL, TPS-based DoS, Stress-based DoS, and Behavioral DoS features can all be configured concurrently, complementing one another, or separate and independent of one another.  
 
    * Both Stress-based and Behavioral DoS protection features continually monitor application server performance for signs of server stress.  Both features will consider server stress as a key component in detecting an attack, and neither will trigger a mitigation if the server is perceived to be healthy.  
 
-   * Stress-based and TPS based DoS features can detect DoS attacks across a pre-defined set of detection criteria (source IP, URL, device ID, geolocation, site).  Behavioral DoS is not constrained to a pre-defined set of detection criteria.  Behavioral DoS is self adjusting dynamic DoS defense system which can detect DoS across hundreds of traffic predicates.  As a result, Behavioral DoS, which is much more affective in mitigating multi-vector layer seven DoS attacks which mutate over time.  Conversly, TPS and/or Stress-based DoS features are much better at defining specific rate limits for traffic entering your application.
+   * Stress-based and TPS based DoS features can detect DoS attacks across a pre-defined set of detection criteria (source IP, URL, device ID, geolocation, site).  Behavioral DoS is not constrained to a pre-defined set of detection criteria, but instead is a self adjusting dynamic DoS defense system which can detect DoS across hundreds of traffic predicates.  As a result, Behavioral DoS, is much more effective in mitigating multi-vector layer seven DoS attacks which mutate over time.  Conversely, TPS and/or Stress-based DoS features are much better at defining specific rate limits for traffic entering your application.
 
 
 
