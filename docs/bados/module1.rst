@@ -222,9 +222,9 @@ In the home directory (/home/f5student) on the |xj|, you will find the two scrip
         
    To view |awaf| layer 7 DoS log, enter the following command from |bip| console:
 
-      .. code-block:: console
+   .. code-block:: console
     
-         tail -f /var/log/dosl7/dosl7d.log
+      tail -f /var/log/dosl7/dosl7d.log
     
 
 .. |dos-prof-properties| image:: _images/dos-prof-properties.png
