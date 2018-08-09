@@ -49,9 +49,13 @@ components:
 
 Accessing Lab Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Please follow the instructions below to access the lab environment used for this lab.
+Please follow the instructions below to access the lab environment.
 
-1. Open a browser and go to `http://training.f5agililty.com/<lab number>/X <http://training.f5agililty.com/%3clab%20number%3e/X>` (where **X** is your student number)
+1. Open a browser and go to http://training.f5agililty.com/
+      
+      |trainingportal|
+
+2. Use the class number and student number included on the class survey to login to the training portal.  Once logged in:
 
     a. Look for the **xubuntu-jumpbox-vxx**. You will use the |xj| for all the labs. (see below)
 
@@ -62,9 +66,9 @@ Please follow the instructions below to access the lab environment used for this
         |image3|
 
 
-.. |image1| image:: _images/image2.png
+.. |trainingportal| image:: _images/training_portal.png
    :width: 6.59740in
-   :height: 6.73203in
+   :height: 5.73203in
 .. |image2| image:: _images/image3.png
    :width: 3.77500in
    :height: 2.87104in
