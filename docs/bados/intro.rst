@@ -13,7 +13,7 @@ lab and access your jump host.
 
 Lab Topology
 ^^^^^^^^^^^^^
-|image1|
+|image2|
 
 Lab Components
 ^^^^^^^^^^^^^^^
@@ -59,24 +59,23 @@ Please follow the instructions below to access the lab environment.
 
     a. Look for the **xubuntu-jumpbox-vxx**. You will use the |xj| for all the labs. (see below)
 
-        |image2|
+        |image3|
 
     b. You can click on **RDP** to RDP to the |xj|, or you can select the **CONSOLE** link and access the jumpbox via your browser.  **The CONSOLE link requires you turn off pop-up blockers.**
 
-        |image3|
+        |image4|
 
 
-.. |image1| image:: _images/image1.png
+.. |image2| image:: _images/image2.png
    :width: 6.59740in
    :height: 5.73203in
-   
 .. |trainingportal| image:: _images/training_portal.png
    :width: 6.59740in
    :height: 5.73203in
-.. |image2| image:: _images/image3.png
+.. |image3| image:: _images/image3.png
    :width: 3.77500in
    :height: 2.87104in
-.. |image3| image:: _images/image4.png
+.. |image4| image:: _images/image4.png
    :width: 3.36587in
    :height: 3.04167in
 
