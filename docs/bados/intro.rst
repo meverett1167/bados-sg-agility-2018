@@ -66,6 +66,10 @@ Please follow the instructions below to access the lab environment.
         |image3|
 
 
+.. |image1| image:: _images/image1.png
+   :width: 6.59740in
+   :height: 5.73203in
+   
 .. |trainingportal| image:: _images/training_portal.png
    :width: 6.59740in
    :height: 5.73203in
