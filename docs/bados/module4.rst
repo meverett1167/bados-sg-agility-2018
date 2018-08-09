@@ -7,7 +7,9 @@ In this module you will be initiating a L7 DDoS attack on the hackazon virtual s
 Once the attack begins the BIG-IP WAF (ASM) will immediately switch into attack mode due to the server health deteriorating almost immediately. As the server gets totally overwhelmed, you may at first notice the good script dropping requests. *That’s why BaDoS first mitigates with a global rate limit just to protect the server*. In a short time, the good script will go back to all 200 OK responses. During this time Behavioral DoS identifies anamolous traffic and generates **Dynamic Signatures** matching only the malicious traffic. Once mitigation is in effect, the server health will rapidly improve and application performance will return to normal.
 
 1.  Using Chromium Browser on the |xj|, open tab to the GUI on bigip01 (https://10.1.1.245)
+
 2.  Navigate to **Security ›› DoS Protection:Signatures** and click on the **Dynamic** box, then set the **Refresh** value to **20 secs**. 
+
 3.  Open another tab/window in Chromium Browser, and go to **Security ››Reporting : DoS : Dashboard**. The dashboard is NOT real time in may take up to 10 minutes for traffic to display.
 
 4.  Revisit the Terminal window you opened earlier which is monitoring behavioral DoS learning signals.  Verify the first number (baseline\_learning\_confidence) is at or above 80%.  Normally, above 90% would be ideal, but for the purposes of this lab over 80% will suffice.

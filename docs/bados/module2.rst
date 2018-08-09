@@ -1,5 +1,8 @@
 .. _module2:
 
+.. NOTE:: The goal of this module is to explain DoS profile configuration options.  The module does not contain any exercises.  If you are already familar with a the settings in an Application Security DoS profile you can skip to module 4.
+
+
 Application Security DoS Profiles
 ==================================================
 

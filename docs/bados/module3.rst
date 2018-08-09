@@ -1,7 +1,10 @@
 .. _module3:
 
+.. NOTE:: The goal of this module is to explain the Stress-Based and Behavioral DoS configuration options.  The module does not contain any exercises.  If you are already familar with a the settings you can skip to module 5.
+
 Stress-Based and Behavioral DoS Profile Settings
 =================================================
+
 In this module, we will review the various settings for configuring Stress-based and Behavioral DoS protections in more detail.  We will not review each and every setting, leaving that exercise up to the reader, but instead will focus on key settings which will most likely require attention during a production deployment.  More detail on each individual setting can be found by viewing the **Help** on left side of the |bip| Configuration Utility (GUI).
 
 Review Stress-Based Dos Profile Settings
